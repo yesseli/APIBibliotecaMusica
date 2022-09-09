@@ -1,19 +1,19 @@
-const {sequelize} = require("../../config/mysql")
-const {DataTypes} = require("sequelize");
+const { sequelize } = require("../../config/mysql")
+const { DataTypes } = require("sequelize");
 
 const Storage = sequelize.define(
     "storages",
     {
-        url:{
+        url: {
             type: DataTypes.STRING,
             allowNull: false,
-        }, 
+        },
         filename: {
             type: DataTypes.STRING,
         },
     },
     {
-       timestamps:true, 
+        timestamps: true,
     }
 );
 

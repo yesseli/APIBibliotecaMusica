@@ -13,7 +13,7 @@ const validatorCreateItem = [
     check("duration.start").exists().notEmpty(),
     check("duration.end").exists().notEmpty(),
     check("mediaId").exists().notEmpty(),
-    (req, res, next)=>{
+    (req, res, next) => {
         return validateResults(req, res, next)
     }
 ];
@@ -21,9 +21,9 @@ const validatorCreateItem = [
 
 const validatorGetItem = [
     check("id").exists().notEmpty(),
-    (req, res, next)=>{
+    (req, res, next) => {
         return validateResults(req, res, next)
     }
 ];
 
-module.exports={validatorCreateItem, validatorGetItem};
+module.exports = { validatorCreateItem, validatorGetItem };
