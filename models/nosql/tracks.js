@@ -48,10 +48,10 @@ const TracksScheme = new mongoose.Schema(
 
 /**implementar metodo propio con relacion a storage  */
 
-TracksScheme.statics.findAllData = function (){
+TracksScheme.statics.findAllData = function () {
     const joinData = this.aggregate([
         {
-            $lookup:{
+            $lookup: {
                 from:"storages",
                 localField: "mediaId",
                 foreignField: "_id",

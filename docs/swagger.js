@@ -13,6 +13,9 @@ const swaggerDefinition = {
         {
             url: "http://localhost:3001/api"
         },
+        {
+            url: "https://blooming-bayou-45625.herokuapp.com/api",
+        },
     ],
     components: {
         securitySchemes:{

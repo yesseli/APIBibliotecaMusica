@@ -16,7 +16,6 @@ const getItems = async (req, res) => {
     }catch(e){
         handleHttpError(res,'ERROR_LIST_ITEMS')
     }
-    
 };
 
 /**
@@ -31,6 +30,7 @@ const getItem = async (req, res) => {
         const data = await storageModel.findById(id);
         res.send({data})
     }catch(e){
+        console.log(e)
         handleHttpError(res,'ERROR_DETAIL_ITEMS')
     }
     
@@ -48,6 +48,7 @@ const createItem = async (req, res) => {
         const fileData ={
         filename: file.filename,url:`${PUBLIC_URL}/${file.filename}`};
         const data = await storageModel.create(fileData)
+        res.status(201);
         res.send({data})
     }catch(e){
         handleHttpError(res,'ERROR_INSERT_ITEM')
@@ -65,14 +66,14 @@ const deleteItem = async (req, res) => {
     try{
         const {id} = matchedData(req)
         const dataFile = await storageModel.findById(id);
-        //await storageModel.delete({_id:id})
+        const deleteResponse = await storageModel.delete({_id:id});
         const {filename} = dataFile;
         const filePath =`${MEDIA_PATH}/${filename}`
 
-        fs.unlinkSync(filePath)
+        //fs.unlinkSync(filePath)
         const data = {
-            filePath, deleted:1
-        }
+            filePath, deleted: deleteResponse.matchedCount,
+        };
         res.send({data});
     } catch(e){
         handleHttpError(res,'ERROR_DELETE_ITEM')

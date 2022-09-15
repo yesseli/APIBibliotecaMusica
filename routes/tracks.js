@@ -2,82 +2,88 @@ const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middleware/session")
 const checkRol = require("../middleware/rol")
-const { validatorCreateItem, validatorGetItem } = require("../validators/tracks")
+const { validatorCreateItem, validatorGetItem, validatorUpdateItem } = require("../validators/tracks")
 const { getItems, getItem, createItem, updateItem, deleteItem } = require("../controllers/tracks");
 
 /**
  * Get all tracks
  * @openapi
  * /tracks:
- *      get:
- *          tags:
- *              - tracks
- *          summary: "List all tracks"
- *          description: "muestra el listado de tracks"
- *          security:
- *              - bearerAuth: []
- *          responses:
- *              '200':
- *                  description: retorna la lista de los archivos
- *              '402':
- *                  description: Error, necesitas tener los permisos
+ *    get:
+ *      tags:
+ *        - tracks
+ *      summary: "Listar canciones"
+ *      description: Obten todas las listas de las canciones
+ *      security:
+ *        - bearerAuth: []
  *      responses:
- *          '201':
- *              description: retorna el objeto insertado en la coleccion con estado '201'
+ *        '200':
+ *          description: Retorna la listas de las canciones.
+ *        '422':
+ *          description: Error de validacion.
  */
-router.get("/", authMiddleware, getItems);
+ router.get("/", authMiddleware,getItems);
+
+
 
 
 /**
-* Get all tracks
+ * Get track
  * @openapi
  * /tracks/{id}:
- *      get:
- *          tags:
- *              - tracks
- *          summary: "Get track detail"
- *          description: "muestra el listado de tracks"
- *          security:
- *              - bearerAuth: []
- *          parameters:
- *              - name: id
- *                in: path
- *                description: Id del track que desea ver
- *                required: true
- *                schema:
- *                    type: string
- *          responses:
- *              '200':
- *                  description: Retorna el detalle de track
- *              '422':
- *                  description: Error de validacion
+ *    get:
+ *      tags:
+ *        - tracks
+ *      summary: "Detalle cancion"
+ *      description: Obten el detalle de una cancion
+ *      security:
+ *        - bearerAuth: []
+ *      parameters:
+ *      - name: id
+ *        in: path
+ *        description: ID de canción a retornar
+ *        required: true
+ *        schema:
+ *          type: string
+ *      responses:
+ *        '200':
+ *          description: Retorna el objecto de la cancion.
+ *          content:
+ *             application/json:
+ *               schema:
+ *                   $ref: '#/components/schemas/track'
+ *        '422':
+ *          description: Error de validacion.
  */
-router.get("/:id", authMiddleware, validatorGetItem, getItem);
+router.get("/:id", authMiddleware,validatorGetItem, getItem);
 
 
 /**
-* Post new track
+ * Register new track
  * @openapi
  * /tracks:
- *      post:
- *          tags:
- *              - tracks
- *          summary: "add track"
- *          description: "insertar nuevo track"
- *          security:
- *              - bearerAuth: []
- *          parameters:
- *             - name: body
- *               in: body
- *               description: parametros requeridos para insertar
- *               required: true
- *               schema: 
- *                  $ref: "#/components/schemas/track"
- *          responses:
- *              '200':
- *                  description: Track insertado correctamente
- *              '422':
- *                  description: error de validacion
+ *    post:
+ *      tags:
+ *        - tracks
+ *      summary: "Register track"
+ *      description: Registra una cancion y obtener el detalle del registro
+ *      security:
+ *        - bearerAuth: []
+ *      responses:
+ *        '200':
+ *          description: Retorna el objeto insertado en la coleccion.
+ *        '422':
+ *          description: Error de validacion.
+ *      requestBody:
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: "#/components/schemas/track"
+ *    responses:
+ *      '201':
+ *        description: Retorna el objeto insertado en la coleccion con stado '201'
+ *      '403':
+ *        description: No tiene permisos '403'
  */
 router.post("/", authMiddleware, checkRol(["user", "admin"]), validatorCreateItem, createItem);
 
@@ -94,12 +100,6 @@ router.post("/", authMiddleware, checkRol(["user", "admin"]), validatorCreateIte
  *          security:
  *              - bearerAuth: []
  *          parameters:
- *              - in: "body"
- *                name: "body"
- *                description: "parametros requeridos para insertar"
- *                required: true
- *                schema:
- *                  $ref: "#/components/schemas/track"
  *              - in: "path"
  *                name: "id"
  *                description: "id track"
@@ -111,6 +111,11 @@ router.post("/", authMiddleware, checkRol(["user", "admin"]), validatorCreateIte
  *                  description: track actualizada
  *              '422': 
  *                  description: erro de validacion
+ *          requestBody:
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: "#/components/schemas/track"
  */
 router.put("/:id", authMiddleware, validatorGetItem, validatorCreateItem, updateItem);
 
