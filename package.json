@@ -47,7 +47,7 @@
     ],
     "globalTeardown": "./global-kill.js"
   },
-  "engines":{
+  "engines": {
     "node": "16.x"
   }
 }
