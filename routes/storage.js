@@ -74,6 +74,8 @@ router.get("/:id", validatorGetItem, getItem);
  *          responses:
  *              '200':
  *                  description: retorna el objeto insertado en la colección
+ *              '201':
+ *                  description: retorna el objeto insertado en la colección con 201
  *              '422':
  *                  description: Error de validación
  *          requestBody:
