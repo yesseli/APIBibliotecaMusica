@@ -72,6 +72,8 @@ router.get("/:id", authMiddleware,validatorGetItem, getItem);
  *      responses:
  *        '200':
  *          description: Retorna el objeto insertado en la coleccion.
+ *        '201':
+ *          description: Retorna el objeto insertado en la coleccion con estado '201'
  *        '422':
  *          description: Error de validacion.
  *      requestBody:
@@ -79,11 +81,6 @@ router.get("/:id", authMiddleware,validatorGetItem, getItem);
  *            application/json:
  *              schema:
  *                 $ref: "#/components/schemas/track"
- *    responses:
- *      '201':
- *        description: Retorna el objeto insertado en la coleccion con stado '201'
- *      '403':
- *        description: No tiene permisos '403'
  */
 router.post("/", authMiddleware, checkRol(["user", "admin"]), validatorCreateItem, createItem);
 
