@@ -21,11 +21,11 @@ const TracksScheme = new mongoose.Schema(
             name:{
                 type:String
             }, 
-        nickname:{
-            type:String
-        },
-        nationality:{
-            type: String
+            nickname:{
+                type:String
+            },
+            nationality:{
+                type: String
         }
     },
     duration:{
@@ -36,8 +36,8 @@ const TracksScheme = new mongoose.Schema(
             type:Number,
         },
     },
-    mediaId:{
-        type: mongoose.Types.ObjectId,
+    url:{
+        type: String,
         },
     },
     {
@@ -53,7 +53,7 @@ TracksScheme.statics.findAllData = function () {
         {
             $lookup: {
                 from:"storages",
-                localField: "mediaId",
+                localField: "url",
                 foreignField: "_id",
                 as: "audio",
             },
@@ -78,7 +78,7 @@ TracksScheme.statics.findOneData = function (id){
 
             $lookup: {
                 from:"storages",
-                localField: "mediaId",
+                localField: "url",
                 foreignField: "_id",
                 as: "audio",
             },

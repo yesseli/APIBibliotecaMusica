@@ -12,7 +12,7 @@ const validatorCreateItem = [
     check("duration").exists().notEmpty(),
     check("duration.start").exists().notEmpty(),
     check("duration.end").exists().notEmpty(),
-    check("mediaId").exists().notEmpty(),
+    check("url").exists().notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }
@@ -39,7 +39,7 @@ const validatorUpdateItem = [
     check("duration").exists().notEmpty(),
     check("duration.start").exists().notEmpty(),
     check("duration.end").exists().notEmpty(),
-    check("mediaId").exists().notEmpty(),
+    check("url").exists().notEmpty(),
     (req, res, next) => {
         return validateResults(req, res, next)
     }

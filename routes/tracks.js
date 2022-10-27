@@ -22,7 +22,7 @@ const { getItems, getItem, createItem, updateItem, deleteItem } = require("../co
  *        '422':
  *          description: Error de validacion.
  */
- router.get("/", authMiddleware,getItems);
+ router.get("/",getItems);
 
 
 
